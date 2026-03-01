@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modern E‑Book System | Vaddul Ramya</title>
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f8f9fa;
+}
+
+#content-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card { 
+  border-radius:12px; 
+  box-shadow:0 4px 12px rgba(0,0,0,0.1); 
+  transition: transform 0.3s;
+}
+.card:hover { transform: translateY(-5px); }
+
+footer {
+  background: #343a40;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  flex-shrink: 0;
+}
+
+.section-title {
+  border-left: 5px solid #0d6efd; 
+  padding-left: 10px; 
+  margin-bottom: 20px;
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold">E‑Book System <br> Vaddul Ramya - 24WH1A05A2</a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><button class="btn btn-link nav-link text-white" onclick="showPage('register')">Register</button></li>
+        <li class="nav-item"><button class="btn btn-link nav-link text-white" onclick="showPage('login')">Login</button></li>
+        <li class="nav-item"><button class="btn btn-link nav-link text-white" onclick="showPage('catalog')">Catalog</button></li>
+        <li class="nav-item"><button class="btn btn-link nav-link text-white" onclick="showPage('cart')">Cart</button></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div id="content-wrapper">
+  <div class="container" id="content"></div>
+</div>
+
+<footer>
+  Modern E‑Book System — Designed by Vaddul Ramya
+</footer>
+
+<script>
+/* ================= BOOK DATA ================= */
+const books = [
+ {id:1, title:'Software Engineering', author:'Pressman', price:300},
+ {id:2, title:'Data Structures', author:'Weiss', price:250},
+ {id:3, title:'Web Technologies', author:'Utpal', price:280},
+ {id:4, title:'Java Programming', author:'Deitel', price:320},
+ {id:5, title:'DBMS', author:'Korth', price:260},
+ {id:6, title:'Computer Networks', author:'Tanenbaum', price:350},
+ {id:7, title:'Operating Systems', author:'Silberschatz', price:300},
+ {id:8, title:'Algorithms', author:'Cormen', price:310},
+ {id:9, title:'Artificial Intelligence', author:'Russell & Norvig', price:400},
+ {id:10, title:'Machine Learning', author:'Murphy', price:380},
+ {id:11, title:'Cyber Security', author:'Stallings', price:330},
+ {id:12, title:'Computer Architecture', author:'Hennessy & Patterson', price:360},
+ {id:13, title:'Database Design', author:'Elmasri', price:270},
+ {id:14, title:'Cloud Computing', author:'Buyya', price:350},
+ {id:15, title:'Mobile App Development', author:'Android Dev', price:290}
+];
+
+/* ================= ROUTER ================= */
+function showPage(p){
+ if(p==='register') pageRegister();
+ if(p==='login') pageLogin();
+ if(p==='catalog') pageCatalog();
+ if(p==='cart') pageCart();
+}
+
+/* ================= REGISTER ================= */
+function pageRegister(){
+content.innerHTML=`
+<div class="card shadow p-4 mx-auto" style="max-width:600px;">
+  <h3 class="section-title">User Registration</h3>
+  <form onsubmit="event.preventDefault(); alert('Registered Successfully'); showPage('login')">
+    <input class="form-control mb-3 form-control-lg" placeholder="Full Name" required>
+    <input type="email" class="form-control mb-3 form-control-lg" placeholder="Email" required>
+    <input type="password" class="form-control mb-3 form-control-lg" placeholder="Password" required>
+    <input type="password" class="form-control mb-3 form-control-lg" placeholder="Confirm Password" required>
+    <button class="btn btn-primary w-100 btn-lg">Register</button>
+  </form>
+</div>`;
+}
+
+/* ================= LOGIN ================= */
+function pageLogin(){
+content.innerHTML=`
+<div class="card shadow p-4 mx-auto" style="max-width:500px;">
+  <h3 class="section-title">Login</h3>
+  <input class="form-control mb-3 form-control-lg" placeholder="Email">
+  <input type="password" class="form-control mb-3 form-control-lg" placeholder="Password">
+  <button class="btn btn-success w-100 btn-lg" onclick="showPage('catalog')">Login</button>
+</div>`;
+}
+
+/* ================= CATALOG ================= */
+function pageCatalog(){
+let html='<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">';
+books.forEach(b=>{
+ html+=`
+ <div class="col">
+  <div class="card h-100 shadow p-3">
+   <h5 class="text-primary">${b.title}</h5>
+   <p class="text-muted mb-2">Author: ${b.author}</p>
+   <p class="fw-bold mb-2">₹${b.price}</p>
+   <button class="btn btn-primary" onclick="addBook(${b.id})">Add to Cart</button>
+  </div>
+ </div>`;
+});
+html+='</div>';
+content.innerHTML = '<h3 class="section-title">E‑Book Catalog</h3>' + html;
+}
+
+function addBook(id){
+ let cart = JSON.parse(localStorage.getItem('ebook_cart')||'[]');
+ let item = cart.find(x=>x.id===id);
+ if(item) item.qty++;
+ else{
+  let b = books.find(x=>x.id===id);
+  cart.push({...b, qty:1});
+ }
+ localStorage.setItem('ebook_cart', JSON.stringify(cart));
+ alert('Book added to cart');
+}
+
+/* ================= CART ================= */
+function pageCart(){
+ let cart = JSON.parse(localStorage.getItem('ebook_cart')||'[]');
+ if(cart.length===0){
+  content.innerHTML=`<h4 class="text-center text-muted">Your cart is empty 😔</h4>`;
+  return;
+ }
+ let rows=''; let total=0;
+ cart.forEach(b=>{
+  let sub=b.price*b.qty;
+  total+=sub;
+  rows+=`<tr>
+    <td>${b.title}</td>
+    <td>${b.author}</td>
+    <td>${b.qty}</td>
+    <td>₹${sub}</td>
+    <td><button class="btn btn-sm btn-danger" onclick="removeBook(${b.id})">Remove</button></td>
+  </tr>`;
+ });
+content.innerHTML=`
+<h3 class="section-title">Shopping Cart</h3>
+<div class="table-responsive">
+<table class="table table-striped table-hover align-middle">
+<thead class="table-dark">
+<tr><th>Book</th><th>Author</th><th>Qty</th><th>Total</th><th></th></tr>
+</thead>
+<tbody>${rows}</tbody>
+</table>
+</div>
+<h4 class="text-end">Grand Total: ₹${total}</h4>`;
+}
+
+function removeBook(id){
+ let cart = JSON.parse(localStorage.getItem('ebook_cart')||'[]');
+ cart = cart.filter(x=>x.id!==id);
+ localStorage.setItem('ebook_cart', JSON.stringify(cart));
+ pageCart();
+}
+
+/* DEFAULT PAGE */
+showPage('register');
+</script>
+
+</body>
+</html>
