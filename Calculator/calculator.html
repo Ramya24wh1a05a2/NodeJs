@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Two Numbers</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#f2f2f2;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+/* Card Layout */
+.container{
+background:white;
+padding:30px;
+width:320px;
+text-align:center;
+border-radius:12px;
+box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+
+input, button{
+margin:10px;
+padding:10px;
+font-size:16px;
+width:80%;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+background:#4CAF50;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+button:hover{
+background:#45a049;
+}
+
+#result{
+margin-top:20px;
+font-size:20px;
+color:rgb(0,15,128);
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>V.Ramya 24WH1A05A2</h1>
+<h1>Add Two Numbers</h1>
+
+<input type="number" id="num1" placeholder="Enter first number">
+<input type="number" id="num2" placeholder="Enter second number">
+
+<br>
+
+<button id="addButton">Add</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+const addNumbers = (a,b) => a + b;
+
+document.getElementById("addButton").addEventListener("click", () => {
+
+let num1 = parseFloat(document.getElementById("num1").value);
+let num2 = parseFloat(document.getElementById("num2").value);
+
+if(isNaN(num1) || isNaN(num2)){
+document.getElementById("result").innerText="Please enter valid numbers!";
+}
+else{
+let sum = addNumbers(num1,num2);
+document.getElementById("result").innerText =
+`The sum of ${num1} and ${num2} is ${sum}`;
+}
+
+});
+
+</script>
+
+</body>
+</html>
